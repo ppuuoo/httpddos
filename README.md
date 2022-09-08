@@ -1,8 +1,5 @@
-# Golang-httpflood ![](https://img.shields.io/badge/Version-2.0-brightgreen.svg) ![](https://img.shields.io/badge/license-MIT-blue.svg)
-Using Golang(net/socket) to httpflood
 
 **Warning: Please use command "ulimit -n 999999" before use this in linux**
-
 **1 Threads =  1 connection, 100~300 connections can down a normal website in 10s(specially apache server LOL)**
  
 **This is golang and threads are just goroutines so you set more higher threads like 1000-5000 is fine.**
@@ -29,11 +26,10 @@ Using Golang(net/socket) to httpflood
 
 
 ## Download
-***Please download the F\*cking golang at first.***
 
 Then:
 
-    git clone https://github.com/Leeon123/golang-httpflood.git
+    git clone https://github.com/LV2K1/httpddos
 
 Header.txt format:
 
@@ -44,6 +40,6 @@ Header.txt format:
 Or anything else of http header. If you don't have any idea of this please just use "nil" for using default random header.
 ## Usage
 
-    cd golang-httpflood
+    cd httpddos
     go build httpflood.go
     ./httpflood  <url> <threads> <get/post> <seconds> <header.txt/nil>
